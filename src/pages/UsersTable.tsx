@@ -1,6 +1,12 @@
 // material-ui
-import { Box, Button, LinearProgress } from "@mui/material";
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import { Box, Button, LinearProgress, Link } from "@mui/material";
+import {
+  DataGrid,
+  GridColDef,
+  GridRenderCellParams,
+  GridToolbar,
+  GridValueGetterParams,
+} from "@mui/x-data-grid";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { fetchUsers } from "../store/UserActions";
@@ -21,6 +27,17 @@ const columns: GridColDef[] = [
     field: "website",
     headerName: "Website",
     flex: 1,
+    renderCell: (params: GridRenderCellParams) => {
+      return (
+        <Link
+          target="_blank"
+          rel="noopener noreferrer"
+          href={`https://${params.value}`}
+        >
+          {params.value}
+        </Link>
+      );
+    },
   },
   {
     field: "company",
@@ -56,8 +73,18 @@ export default function UsersTable() {
           disableSelectionOnClick
           components={{
             LoadingOverlay: LinearProgress,
+            Toolbar: GridToolbar,
           }}
           loading={loading}
+          componentsProps={{
+            toolbar: {
+              showQuickFilter: true,
+              quickFilterProps: { debounceMs: 500 },
+            },
+          }}
+          disableColumnFilter
+          disableColumnSelector
+          disableDensitySelector
         />
       </Box>
     </Box>
