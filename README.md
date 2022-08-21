@@ -8,6 +8,10 @@ Simple React application to display User information
 
 In the project directory, you can run:
 
+### `yarn install`
+
+Install required modules
+
 ### `yarn start`
 
 Runs the app in the development mode.\
